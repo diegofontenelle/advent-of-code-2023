@@ -7,22 +7,20 @@ function validGame(game) {
         blue: 14
     }
 
-    const digitsRegex = /\d{1,2}/ig
+    const digitsPattern = "\\d{1,2}"
+    const digitsRegex = new RegExp(digitsPattern, 'g')
+    const colorRegex = color => new RegExp(`${digitsPattern}\\s\\b${color}\\b`, 'g')
 
     const rounds = game.split('; ')
 
     for (let round of rounds) {
-        const greenRegex = /\d{1,2}\s\bgreen\b/ig
-        let greens = round.match(greenRegex)
-
-        const blueRegex = /\d{1,2}\s\bblue\b/ig
-        let blues = round.match(blueRegex)
-        const redRegex = /\d{1,2}\s\bred\b/ig
-        let reds = round.match(redRegex)
+        let reds = round.match(colorRegex('red'))
+        let greens = round.match(colorRegex('green'))
+        let blues = round.match(colorRegex('blue'))
 
         reds = reds !== null ? reds.join('').match(digitsRegex)[0]: '0'
-        blues = blues !== null ? blues.join('').match(digitsRegex)[0] : '0'
         greens = greens !== null ? greens.join('').match(digitsRegex)[0] : '0'
+        blues = blues !== null ? blues.join('').match(digitsRegex)[0] : '0'
 
         if (parseInt(reds) > cubes.red || parseInt(greens) > cubes.green || parseInt(blues) > cubes.blue) {
             return false 
