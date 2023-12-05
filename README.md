@@ -2,5 +2,5 @@
 Yearly implementation of the advent of code challenges.
 
 ### Languages
-- JS
+- Js
 - Go
